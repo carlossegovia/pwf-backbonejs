@@ -7,8 +7,13 @@ var PersonaModel = Backbone.Model.extend({
      * @field
      */
     defaults: {
+        "id":"",
         "nombre": "",
         "apellido": "",
-        "username": ""
+        "alias": "",
+        "telefono": "",
+        "email": "",
+        "direccion": "",
+        "fechaCreacion": ""
     }
 });
