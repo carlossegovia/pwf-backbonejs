@@ -1,31 +1,28 @@
 [
     {
-        "id":"1",
         "nombre": "Carlos",
         "apellido": "Segovia",
         "alias": "Carlitos",
         "telefono": "0971779303",
         "email": "carlitossegovia@gmail.com",
         "direccion": "San Lorenzo",
-        "fechaCreacion": "13-09-2016"
+        "fechaCreacion": "2016-09-13"
     }, {
-        "id":"2",
         "nombre": "Ruben",
         "apellido": "Figueredo",
         "alias": "Rubencito",
         "telefono": "089746",
         "email": "ruben@gmail.com",
         "direccion": "San Lorenzo",
-        "fechaCreacion": "13-09-2015"
+        "fechaCreacion": "2016-09-13"
     }, {
-        "id":"3",
         "nombre": "Cristhian",
         "apellido": "Benitez",
         "alias": "Rubita",
         "telefono": "0904",
-        "email": "rubiahot@gmail.com",
+        "email": "rubia@gmail.com",
         "direccion": "Ita",
-        "fechaCreacion": "11-09-2016"
+        "fechaCreacion": "2016-09-13"
     }
 
 

@@ -5,6 +5,7 @@
         <table class="table table-striped" >
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Nombres</th>
                     <th>Apellidos</th>
                     <th>Alias</th>
@@ -17,6 +18,9 @@
             <tbody>
                 <% _.forEach(collection, function(item){ %>
                     <tr>
+                        <td>
+                            <%=item.id %>
+                        </td>
                         <td>
                             <%=item.nombre %>
                         </td>

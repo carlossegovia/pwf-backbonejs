@@ -48,6 +48,10 @@ var FormularioPersonaView = Backbone.View.extend({
         this.$el.find("[name]").each(function () {
             data[this.name] = this.value;
         });
+
+        var today = new Date();
+        data["fechaCreacion"] = today.toISOString().substring(0, 10);
+
         var model = new PersonaModel(data);
         this.collection.add(model);
     }
