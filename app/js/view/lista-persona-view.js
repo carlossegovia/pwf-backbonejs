@@ -11,7 +11,8 @@ var ListaPersonaView = Backbone.View.extend({
 
     events: {
         "click #limpiar": "render",
-        "click #filtrar": "filtrar2"
+        "click #filtrar": "filtrar2",
+        "click #1": "eliminar"
     },
     /**
      * @Constructor
@@ -58,15 +59,15 @@ var ListaPersonaView = Backbone.View.extend({
         for(var i=0; i<this.collection.length; i++) {
             myModel = this.collection.models[i];
             if (data["sel1"]=="Nombre"){
-                if (myModel.attributes.nombre.search(data["filtrado"])!=-1){
+                if (myModel.attributes.nombre.toLowerCase().search(data["filtrado"].toLowerCase())!=-1){
                     coleccion.add(myModel);
                 }
             }else if(data["sel1"]=="Apellido"){
-                if (myModel.attributes.apellido.search(data["filtrado"])!=-1){
+                if (myModel.attributes.apellido.toLowerCase().search(data["filtrado"].toLowerCase())!=-1){
                     coleccion.add(myModel);
                 }
             }else if(data["sel1"]=="Alias") {
-                if (myModel.attributes.alias.search(data["filtrado"])!=-1){
+                if (myModel.attributes.alias.toLowerCase().search(data["filtrado"].toLowerCase())!=-1){
                     coleccion.add(myModel);
                 }
             }else if(data["sel1"]=="ID") {
@@ -74,11 +75,11 @@ var ListaPersonaView = Backbone.View.extend({
                     coleccion.add(myModel);
                 }
             }else if(data["sel1"]=="Dirección") {
-                if (myModel.attributes.direccion.search(data["filtrado"])!=-1){
+                if (myModel.attributes.direccion.toLowerCase().search(data["filtrado"].toLowerCase())!=-1){
                     coleccion.add(myModel);
                 }
             }else if(data["sel1"]=="Email") {
-                if (myModel.attributes.email.search(data["filtrado"])!=-1){
+                if (myModel.attributes.email.toLowerCase().search(data["filtrado"].toLowerCase())!=-1){
                     coleccion.add(myModel);
                 }
             }
@@ -91,4 +92,17 @@ var ListaPersonaView = Backbone.View.extend({
         }));
         return this;
     }
+    /**
+    eliminar: function () {
+
+        var data = {};
+        //por cada input del view
+        this.$el.find("[name]").each(function () {
+            data[this.name] = this.value;
+        });
+        console.log(data["1"]);
+
+
+    }
+     */
 });
