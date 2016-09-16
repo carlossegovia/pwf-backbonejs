@@ -10,8 +10,8 @@ var ListaPersonaView = Backbone.View.extend({
     templateURL: "templates/lista-persona-tmpl.html",
 
     events: {
-        "click #filtrar": "filtrar",
-        "click #limpiar": "render"
+        "click #limpiar": "render",
+        "click #filtrar": "filtrar2"
     },
     /**
      * @Constructor
@@ -43,33 +43,51 @@ var ListaPersonaView = Backbone.View.extend({
     },
 
     /**
-     * Para filtrar los datos de las personas que están en memoria.
-     * Actualmente no esta funcionado bien, ya que que realiza una busqueda exacta.
-     * Se debe de buscar que el metodo se realice por subString
+     * Para filtrar los datos de las personas.
      */
-    filtrar: function () {
+    filtrar2: function () {
         var data = {};
         //por cada input del view
         this.$el.find("[name]").each(function () {
             data[this.name] = this.value;
         });
 
-        if (data["sel1"]=="Nombre"){
-            var col = this.collection.where({"nombre":data["filtrado"]});
-        }else if(data["sel1"]=="Apellido"){
-            var col = this.collection.where({"apellido":data["filtrado"]});
-        }else if(data["sel1"]=="Alias") {
-            var col = this.collection.where({"alias": data["filtrado"]});
-        }else if(data["sel1"]=="ID") {
-            var col = this.collection.where({"id": parseInt(data["filtrado"])});
-        }else if(data["sel1"]=="Dirección") {
-            var col = this.collection.where({"direccion": data["filtrado"]});
+        //Aquí se realizan los principales calculos de busqueda
+        var myModel;
+        var coleccion = new PersonaCollection();
+        for(var i=0; i<this.collection.length; i++) {
+            myModel = this.collection.models[i];
+            if (data["sel1"]=="Nombre"){
+                if (myModel.attributes.nombre.search(data["filtrado"])!=-1){
+                    coleccion.add(myModel);
+                }
+            }else if(data["sel1"]=="Apellido"){
+                if (myModel.attributes.apellido.search(data["filtrado"])!=-1){
+                    coleccion.add(myModel);
+                }
+            }else if(data["sel1"]=="Alias") {
+                if (myModel.attributes.alias.search(data["filtrado"])!=-1){
+                    coleccion.add(myModel);
+                }
+            }else if(data["sel1"]=="ID") {
+                if (myModel.attributes.id.toString().search(data["filtrado"])!=-1){
+                    coleccion.add(myModel);
+                }
+            }else if(data["sel1"]=="Dirección") {
+                if (myModel.attributes.direccion.search(data["filtrado"])!=-1){
+                    coleccion.add(myModel);
+                }
+            }else if(data["sel1"]=="Email") {
+                if (myModel.attributes.email.search(data["filtrado"])!=-1){
+                    coleccion.add(myModel);
+                }
+            }
         }
 
-        var coll = new PersonaCollection(col);
+        //Para renderizar los resultados de la busqueda
         var tmpl = _.template(this.template);
         this.$el.html(tmpl({
-            collection: coll.toJSON()
+            collection: coleccion.toJSON()
         }));
         return this;
     }
