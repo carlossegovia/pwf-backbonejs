@@ -14,14 +14,16 @@ var PersonaModel = Backbone.Model.extend({
         "telefono": "",
         "email": "",
         "direccion": "",
-        "fechaCreacion": ""
+        "fechacreacion": "",
+        "fechamodificacion": null
     },
     /**
      * Funcion que asigna automaticamente un ID a los modelos que recibe
      * desde el JSON y cualquiera que se agregue
      */
-    initialize: function () {
-        this.set('id', globalCounter);
-        globalCounter += 1;
-    }
+
+    urlRoot: 'http://163.172.218.124/pwf/rest/agenda'
+
 });
+
+

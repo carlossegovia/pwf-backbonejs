@@ -1,0 +1,23 @@
+{
+  "name": "pwf-backbonejs",
+  "description": "",
+  "main": "",
+  "authors": [
+    "rubenfig <mangekyou1>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/carlossegovia/pwf-backbonejs",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone-amd": "^1.1.0",
+    "jquery": "^3.1.0",
+    "curl": "^0.8.13",
+    "lodash": "^4.16.0"
+  }
+}

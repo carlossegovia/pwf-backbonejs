@@ -44,6 +44,7 @@ var FormularioPersonaView = Backbone.View.extend({
      */
     guardar: function () {
         var data = {};
+
         //por cada input del view
         this.$el.find("[name]").each(function () {
             data[this.name] = this.value;
@@ -53,6 +54,6 @@ var FormularioPersonaView = Backbone.View.extend({
         data["fechaCreacion"] = today.toISOString().substring(0, 10);
 
         var model = new PersonaModel(data);
-        this.collection.add(model);
+        model.save();
     }
 });
