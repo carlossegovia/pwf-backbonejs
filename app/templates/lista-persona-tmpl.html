@@ -40,7 +40,7 @@
             </thead>
             <tbody>
                 <% _.forEach(collection, function(item){ %>
-                    <tr>
+                    <tr data-id="<%=item.id%>" >
                         <td>
                             <%=item.id %>
                         </td>
@@ -65,13 +65,13 @@
                         <td>
                             <%=item.fechaCreacion %>
                         </td>
-                        <td>
-                            <button name="eliminar" class="btn btn-danger">Eliminar</button>
-                        </td>
+
                     </tr>
                     <% }); %>
             </tbody>
         </table>
+            <button id="editar" class="btn btn-danger">Editar</button>
+            <button id="eliminar" class="btn btn-danger">Eliminar</button>
     </div>
 </div>
 <!-- Fin templates/lista-persona-tmpl -->

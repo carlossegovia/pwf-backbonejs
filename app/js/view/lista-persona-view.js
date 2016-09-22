@@ -12,7 +12,16 @@ var ListaPersonaView = Backbone.View.extend({
     events: {
         "click #limpiar": "render",
         "click #filtrar": "filtrar2",
-        "click #1": "eliminar"
+        "click tr": "clicked",
+        "click #eliminar": "eliminar"
+    },
+
+    clicked: function(e){
+        e.preventDefault();
+        var id = $(e.currentTarget).data("id");
+        this.selectedPersona = this.collection.get(id);
+        console.log(id);
+
     },
     /**
      * @Constructor
@@ -20,12 +29,14 @@ var ListaPersonaView = Backbone.View.extend({
     initialize: function () {
         var thiz = this;
         //cuando el collection cambia, se carga la lista.
-        this.collection.on("add", this.render, this);
+        this.listenTo(this.collection, 'save', this.render);
+
         this.loadTemplate(function () {
             //una vez descargado el template se invoca al fetch para obtener los datos
             //del collection
             thiz.collection.fetch();
         });
+        this.listenTo(this.collection, 'destroy', this.render);
     },
 
     /**
@@ -91,18 +102,23 @@ var ListaPersonaView = Backbone.View.extend({
             collection: coleccion.toJSON()
         }));
         return this;
-    }
-    /**
+    },
+
     eliminar: function () {
+        var a_eliminar = this.collection.get(this.selectedPersona);
+        a_eliminar.destroy({
+            dataType : 'text',
+            success: function(model, response, options) {
+                alert("Se eliminó correctamente!");
+            },
+            error: function(model, response, options) {
+                alert("Ha ocurrido un error!");
+            }
 
-        var data = {};
-        //por cada input del view
-        this.$el.find("[name]").each(function () {
-            data[this.name] = this.value;
+
         });
-        console.log(data["1"]);
 
 
     }
-     */
+
 });

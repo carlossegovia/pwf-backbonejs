@@ -14,7 +14,7 @@ var FormularioPersonaView = Backbone.View.extend({
      * @field
      */
     events: {
-        "click #guardar": "guardar",
+        "click #guardar": "guardar"
     },
 
     /**
@@ -54,6 +54,15 @@ var FormularioPersonaView = Backbone.View.extend({
         data["fechaCreacion"] = today.toISOString().substring(0, 10);
 
         var model = new PersonaModel(data);
-        model.save();
+        model.save({
+            success: function(model, response, options) {
+                alert("Se eliminó correctamente!");
+            },
+            error: function(model, response, options) {
+                alert("Ha ocurrido un error!");
+            }
+
+
+        });
     }
 });
