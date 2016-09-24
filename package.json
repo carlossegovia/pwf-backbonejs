@@ -8,6 +8,9 @@
     "karma-phantomjs-launcher": "*"
   },
   "scripts": {
-	"start": "http-server ./app -a localhost -p 8080 -c-1"
+    "start": "http-server ./app -a localhost -p 8080 -c-1"
+  },
+  "dependencies": {
+    "backbone-forms": "^0.14.1"
   }
 }

@@ -23,8 +23,11 @@ var FormularioPersonaView = Backbone.View.extend({
     initialize: function () {
         var thiz = this;
         this.loadTemplate(function () {
+
             thiz.render();
+
         });
+
     },
 
     /**
@@ -32,10 +35,39 @@ var FormularioPersonaView = Backbone.View.extend({
      * @function
      */
     render: function () {
-        var tmpl = _.template(this.template);
-        //se añade el html resultante al contenedor del view.
-        this.$el.html(tmpl());
-        return this;
+        var contacto = {};
+        var thiz=this;
+
+
+        if (this.id !== undefined) {
+            var model = new PersonaModel({id: this.id});
+            model.fetch({
+                success: function(response){
+
+                    contacto = response.toJSON();
+                    console.log(contacto);
+                    var tmpl = _.template(thiz.template);
+                    //se añade el html resultante al contenedor del view.
+                    thiz.$el.html(tmpl({
+                        contacto: contacto
+                    }));
+                    return thiz;
+                } ,
+                error: function(model, response){
+                    alert("Ya no existe el contacto");
+                    return thiz;
+                }
+
+            });
+
+        }else{
+            var tmpl = _.template(this.template);
+            //se añade el html resultante al contenedor del view.
+            this.$el.html(tmpl({
+                contacto: contacto
+            }));
+            return this;
+        }
     },
 
     /**
@@ -44,25 +76,36 @@ var FormularioPersonaView = Backbone.View.extend({
      */
     guardar: function () {
         var data = {};
-
+        var thiz=this;
         //por cada input del view
         this.$el.find("[name]").each(function () {
             data[this.name] = this.value;
         });
-
         var today = new Date();
-        data["fechaCreacion"] = today.toISOString().substring(0, 10);
-
+        if (this.id!=undefined){
+            data["fechamodificacion"] = today.toISOString().substring(0, 10);
+            data["id"] = this.id;
+        }else{
+            data["fechacreacion"] = today.toISOString().substring(0, 10);
+        }
         var model = new PersonaModel(data);
-        model.save({
-            success: function(model, response, options) {
-                alert("Se eliminó correctamente!");
-            },
-            error: function(model, response, options) {
-                alert("Ha ocurrido un error!");
-            }
 
+        model.save(null, {
+            success: function(model, response) {
+                alert("Se agregó correctamente!");
+                thiz.remove();
+                if (thiz.id){
+                    Backbone.history.navigate("/", true)
+                }else {
+                    Backbone.history.navigate("/editar/"+model.get("id"), true)
+                }
+            },
+            error: function(model, response) {
+                alert("Ha ocurrido un error!");
+            },
+            wait: true
 
         });
+
     }
 });

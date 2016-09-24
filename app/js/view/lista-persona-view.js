@@ -13,7 +13,8 @@ var ListaPersonaView = Backbone.View.extend({
         "click #limpiar": "render",
         "click #filtrar": "filtrar2",
         "click tr": "clicked",
-        "click #eliminar": "eliminar"
+        "click #eliminar": "eliminar",
+        "click #editar": "editar"
     },
 
     clicked: function(e){
@@ -28,13 +29,16 @@ var ListaPersonaView = Backbone.View.extend({
      */
     initialize: function () {
         var thiz = this;
+        this.selectedPersona=undefined;
         //cuando el collection cambia, se carga la lista.
-        this.listenTo(this.collection, 'save', this.render);
-
         this.loadTemplate(function () {
             //una vez descargado el template se invoca al fetch para obtener los datos
             //del collection
-            thiz.collection.fetch();
+            thiz.collection.fetch({
+                success : function(collection, response) {
+                    thiz.render();
+                }
+                });
         });
         this.listenTo(this.collection, 'destroy', this.render);
     },
@@ -44,6 +48,7 @@ var ListaPersonaView = Backbone.View.extend({
      * @function
      */
     render: function () {
+
         var tmpl = _.template(this.template);
         //se procesa el collection a un json
         var coll = this.collection.toJSON();
@@ -105,11 +110,14 @@ var ListaPersonaView = Backbone.View.extend({
     },
 
     eliminar: function () {
-        var a_eliminar = this.collection.get(this.selectedPersona);
+        var a_eliminar = this.selectedPersona;
+        var thiz= this;
         a_eliminar.destroy({
             dataType : 'text',
             success: function(model, response, options) {
                 alert("Se eliminó correctamente!");
+                thiz.collection.fetch();
+                thiz.selectedPersona=undefined;
             },
             error: function(model, response, options) {
                 alert("Ha ocurrido un error!");
@@ -117,6 +125,11 @@ var ListaPersonaView = Backbone.View.extend({
 
 
         });
+
+
+    },
+    editar: function () {
+        Backbone.history.navigate("/editar/"+this.selectedPersona.get('id'), true)
 
 
     }

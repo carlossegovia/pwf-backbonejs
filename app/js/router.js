@@ -30,27 +30,42 @@ var AppRouter = Backbone.Router.extend({
      * @field
      */
     routes: {
-        "personas/": "home"
+        "": "home",
+        "personas/": "home",
+        "agregar/": "agregar",
+        "editar/:id": "editar"
     },
     /**
      * @constructor
      */
     initialize: function () {
         this.collection = new PersonaCollection();
+        this.selectedPersona= undefined;
     },
 
     /**
      * Se encarga de manejar el listado y alta de personas.
      */
     home: function () {
+        this.collection.fetch();
         var view = new ListaPersonaView({
             collection: this.collection,
+            selectedPersona: this.selectedPersona,
             el: $("#lista-persona")
         });
+    },
+    agregar: function() {
         //se inicializa el formulario de alta de personas
         var form = new FormularioPersonaView({
             collection: this.collection,
             el: $("#formulario-persona")
+        });
+    },
+    editar: function(id) {
+        //se inicializa el formulario de alta de personas
+        var editarview = new FormularioPersonaView({
+            collection: this.collection, id: id,
+            el: $("#formulario-editar-persona")
         });
     },
     /**
