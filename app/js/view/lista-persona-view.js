@@ -12,7 +12,7 @@ var ListaPersonaView = Backbone.View.extend({
     events: {
         "click #limpiar": "render",
         "click #filtrar": "filtrar2",
-        "click tr": "clicked",
+        "click #tr1": "clicked",
         "click #eliminar": "eliminar",
         "click #editar": "editar"
     },
@@ -22,8 +22,12 @@ var ListaPersonaView = Backbone.View.extend({
         var id = $(e.currentTarget).data("id");
         this.selectedPersona = this.collection.get(id);
         console.log(id);
+        thisParent = $(e.target).parent();
+        thisParent.siblings('.active').removeClass('active');
+        thisParent.addClass('active');
 
     },
+
     /**
      * @Constructor
      */
