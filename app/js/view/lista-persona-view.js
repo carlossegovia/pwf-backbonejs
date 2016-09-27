@@ -15,7 +15,9 @@ var ListaPersonaView = Backbone.View.extend({
         "click #tr1": "clicked",
         "click #eliminar": "eliminar",
         "click #pag": "getPaginacion",
-        "click #editar": "editar"
+        "click #editar": "editar",
+        "click #siguiente": "siguiente",
+        "click #anterior": "anterior"
     },
 
     clicked: function(e){
@@ -35,12 +37,16 @@ var ListaPersonaView = Backbone.View.extend({
     initialize: function () {
         var thiz = this;
         this.selectedPersona=undefined;
+        this.pagina=1;
+        this.filtro="";
+        this.pagMax=1;
         //cuando el collection cambia, se carga la lista.
         this.loadTemplate(function () {
             //una vez descargado el template se invoca al fetch para obtener los datos
             //del collection
-            thiz.collection.fetch({
+            thiz.collection.fetch({ data: $.param({inicio: 0, cantidad: 10, filtro: this.filtro}),
                 success : function(collection, response) {
+                    thiz.pagMax=Math.ceil(response.total/10);
                     thiz.render();
                 }
                 });
@@ -59,7 +65,9 @@ var ListaPersonaView = Backbone.View.extend({
         var coll = this.collection.toJSON();
         //se añade el html resultante al contenedor del view.
         this.$el.html(tmpl({
-            collection: coll
+            collection: coll,
+            pagina: this.pagina,
+            pagMax: this.pagMax
         }));
         return this;
     },
@@ -115,51 +123,61 @@ var ListaPersonaView = Backbone.View.extend({
     },
 
     eliminar: function () {
-        var a_eliminar = this.selectedPersona;
-        var thiz= this;
-        a_eliminar.destroy({
-            dataType : 'text',
-            success: function(model, response, options) {
-                alert("Se eliminó correctamente!");
-                thiz.collection.fetch();
-                thiz.selectedPersona=undefined;
-            },
-            error: function(model, response, options) {
-                alert("Ha ocurrido un error!");
-            }
+        if(this.selectedPersona==undefined){
+            alert("Seleccione un elemento primero!");
+        }else {
+            var a_eliminar = this.selectedPersona;
+            var thiz = this;
+            a_eliminar.destroy({
+                dataType: 'text',
+                success: function (model, response, options) {
+                    alert("Se eliminó correctamente!");
+                    thiz.collection.fetch();
+                    thiz.selectedPersona = undefined;
+                },
+                error: function (model, response, options) {
+                    alert("Ha ocurrido un error!");
+                }
 
 
-        });
-
+            });
+        }
 
     },
     editar: function () {
-        Backbone.history.navigate("/editar/"+this.selectedPersona.get('id'), true)
-
+        if(this.selectedPersona==undefined){
+            alert("Seleccione un elemento primero!");
+        }else {
+            Backbone.history.navigate("/editar/" + this.selectedPersona.get('id'), true);
+            this.selectedPersona = undefined;
+        }
 
     },
+    siguiente: function() {
+        var thiz=this;
+        if (this.pagina<this.pagMax){
 
-    getPaginacion: function () {
-        var Agenda = Backbone.Model.extend({
-            urlRoot: 'http://localhost:1337/163.172.218.124/pwf/rest/agenda',
-            url: function() {
-                var base = _.result(this, 'urlRoot');
-                if (this.get('inicio')!=undefined){
-                    return base + '?inicio=' + encodeURIComponent(this.get('inicio'))+ '&cantidad=' +
-                        encodeURIComponent(this.get('cantidad')) + '&filtro=' + encodeURIComponent(this.get('filtro'));
+          this.pagina++;
+          thiz.collection.fetch({ data: $.param({inicio: (this.pagina-1)*10, cantidad: 10, filtro: this.filtro}),
+              success : function(collection, response) {
+                  thiz.pagMax=Math.ceil(response.total/10);
+                  thiz.render();
+              }
+          });
+      }
+    },
+    anterior: function() {
+        var thiz=this;
+        if (this.pagina>0){
+            this.pagina--;
+            thiz.collection.fetch({ data: $.param({inicio: (this.pagina-1)*10, cantidad: 10, filtro: this.filtro}),
+                success : function(collection, response) {
+                    thiz.pagMax=Math.ceil(response.total/10);
+                    thiz.render();
                 }
-                return base;
-            }
-        });
-
-        var myAgenda = new Agenda();
-        myAgenda.set('inicio', '0');
-        myAgenda.set('cantidad', '10');
-        myAgenda.set('filtro', 'car');
-        myAgenda.fetch();
-
-        console.log(myAgenda);
-
+            });
+        }
     }
+
 
 });

@@ -113,7 +113,6 @@ var FormularioPersonaView = Backbone.View.extend({
         model.save(null, {
             success: function(model, response) {
                 alert("Se agregó correctamente!");
-                thiz.remove();
                 if (thiz.id){
                     Backbone.history.navigate("/", true)
                 }else {
