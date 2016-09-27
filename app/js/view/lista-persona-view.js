@@ -14,7 +14,6 @@ var ListaPersonaView = Backbone.View.extend({
         "click #filtrar": "filtrar2",
         "click #tr1": "clicked",
         "click #eliminar": "eliminar",
-        "click #pag": "getPaginacion",
         "click #editar": "editar",
         "click #siguiente": "siguiente",
         "click #anterior": "anterior"
@@ -117,7 +116,9 @@ var ListaPersonaView = Backbone.View.extend({
         //Para renderizar los resultados de la busqueda
         var tmpl = _.template(this.template);
         this.$el.html(tmpl({
-            collection: coleccion.toJSON()
+            collection: coleccion.toJSON(),
+            pagina: this.pagina,
+            pagMax: this.pagMax
         }));
         return this;
     },
