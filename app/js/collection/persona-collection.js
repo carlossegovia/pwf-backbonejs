@@ -3,8 +3,9 @@
  * fuente de datos para simular el GET para obtener los datos.
  */
 var PersonaCollection = Backbone.Collection.extend({
-    model: PersonaModel
-    , url: 'http://localhost:1337/163.172.218.124/pwf/rest/agenda',
+    model: PersonaModel,
+    url: 'http://localhost:1337/163.172.218.124/pwf/rest/agenda',
+
     parse: function(data) {
         return data.lista;
     }

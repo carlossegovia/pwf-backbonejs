@@ -14,6 +14,7 @@ var ListaPersonaView = Backbone.View.extend({
         "click #filtrar": "filtrar2",
         "click #tr1": "clicked",
         "click #eliminar": "eliminar",
+        "click #pag": "getPaginacion",
         "click #editar": "editar"
     },
 
@@ -135,6 +136,29 @@ var ListaPersonaView = Backbone.View.extend({
     editar: function () {
         Backbone.history.navigate("/editar/"+this.selectedPersona.get('id'), true)
 
+
+    },
+
+    getPaginacion: function () {
+        var Agenda = Backbone.Model.extend({
+            urlRoot: 'http://localhost:1337/163.172.218.124/pwf/rest/agenda',
+            url: function() {
+                var base = _.result(this, 'urlRoot');
+                if (this.get('inicio')!=undefined){
+                    return base + '?inicio=' + encodeURIComponent(this.get('inicio'))+ '&cantidad=' +
+                        encodeURIComponent(this.get('cantidad')) + '&filtro=' + encodeURIComponent(this.get('filtro'));
+                }
+                return base;
+            }
+        });
+
+        var myAgenda = new Agenda();
+        myAgenda.set('inicio', '0');
+        myAgenda.set('cantidad', '10');
+        myAgenda.set('filtro', 'car');
+        myAgenda.fetch();
+
+        console.log(myAgenda);
 
     }
 
