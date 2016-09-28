@@ -22,7 +22,7 @@ var PersonaModel = Backbone.Model.extend({
      * desde el JSON y cualquiera que se agregue
      */
 
-    urlRoot: 'http://163.172.218.124/pwf/rest/agenda'
+    urlRoot: 'https://163.172.218.124/pwf/rest/agenda'
 
 });
 
