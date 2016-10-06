@@ -4,7 +4,7 @@
  */
 var PersonaCollection = Backbone.Collection.extend({
     model: PersonaModel,
-    url: 'https://163.172.218.124/pwf/rest/agenda',
+    url: 'https://desa03.konecta.com.py/pwf/rest/agenda',
 
     parse: function(data) {
         return data.lista;
