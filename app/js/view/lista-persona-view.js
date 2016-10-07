@@ -10,7 +10,7 @@ var ListaPersonaView = Backbone.View.extend({
     templateURL: "templates/lista-persona-tmpl.html",
 
     events: {
-        "click #limpiar": "render",
+        "click #limpiar": "limpiar",
         "click #filtrar": "filtrar2",
         "click #tr1": "clicked",
         "click #eliminar": "eliminar",
@@ -18,7 +18,10 @@ var ListaPersonaView = Backbone.View.extend({
         "click #siguiente": "siguiente",
         "click #anterior": "anterior"
     },
-
+    limpiar: function(){
+        this.filtro='';
+        this.render();
+    },
     clicked: function(e){
         e.preventDefault();
         var id = $(e.currentTarget).data("id");
@@ -54,6 +57,8 @@ var ListaPersonaView = Backbone.View.extend({
                 });
         });
         this.listenTo(this.collection, 'destroy', this.render);
+
+
     },
 
     /**

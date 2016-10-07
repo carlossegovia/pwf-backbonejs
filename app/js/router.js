@@ -14,7 +14,7 @@ Backbone.View.prototype.loadTemplate = function (callback) {
     }).error(function (err) {
         alert("Error al obtener el template");
     });
-}
+};
 
 /**
  * Define el enrutador de la aplicación se encarga de instanciar los views 
