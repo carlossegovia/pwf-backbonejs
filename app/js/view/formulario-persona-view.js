@@ -114,7 +114,7 @@ var FormularioPersonaView = Backbone.View.extend({
         model.save(null, {
             success: function(model, response) {
                 alert("Se agregó correctamente!");
-
+                ListaPersonaView.prototype.render();
             },
             error: function(model, response) {
                 alert("Ha ocurrido un error!");
