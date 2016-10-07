@@ -32,8 +32,7 @@ var AppRouter = Backbone.Router.extend({
     routes: {
         "": "home",
         "personas/": "home",
-        "agregar/": "agregar",
-        "editar/:id": "editar"
+        "agregar/": "agregar"
     },
     /**
      * @constructor
@@ -72,13 +71,6 @@ var AppRouter = Backbone.Router.extend({
         });
     },
 
-    editar: function(id) {
-        //se inicializa el formulario de alta de personas
-        var editarview = new FormularioPersonaView({
-            collection: this.collection, id: id,
-            el: $("#formulario-editar-persona")
-        });
-    },
     /**
      * Handler por defecto.
      * @function

@@ -145,15 +145,21 @@ var ListaPersonaView = Backbone.View.extend({
         }
 
     },
+
     editar: function () {
         if(this.selectedPersona==undefined){
             alert("Seleccione un elemento primero!");
+            $('#myModal2').modal('toggle');
         }else {
-            Backbone.history.navigate("/editar/" + this.selectedPersona.get('id'), true);
-            this.selectedPersona = undefined;
+            //se inicializa el formulario de alta de personas
+            var editarview = new FormularioPersonaView({
+                collection: this.collection, id: this.selectedPersona.get('id'),
+                el: $("#formulario-editar-persona")
+            });
         }
-
+        this.selectedPersona = undefined;
     },
+
     siguiente: function() {
         var thiz=this;
         if (this.pagina<this.pagMax){
