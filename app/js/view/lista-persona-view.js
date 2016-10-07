@@ -23,10 +23,11 @@ var ListaPersonaView = Backbone.View.extend({
         e.preventDefault();
         var id = $(e.currentTarget).data("id");
         this.selectedPersona = this.collection.get(id);
-        console.log(id);
         thisParent = $(e.target).parent();
         thisParent.siblings('.active').removeClass('active');
         thisParent.addClass('active');
+        $("#editar").removeAttr("disabled");
+        $("#eliminar").removeAttr("disabled");
 
     },
 
@@ -47,6 +48,8 @@ var ListaPersonaView = Backbone.View.extend({
                 success : function(collection, response) {
                     thiz.pagMax=Math.ceil(response.total/10);
                     thiz.render();
+                    $("#editar").attr("disabled", true);
+                    $("#eliminar").attr("disabled", true);
                 }
                 });
         });
@@ -75,52 +78,17 @@ var ListaPersonaView = Backbone.View.extend({
      * Para filtrar los datos de las personas.
      */
     filtrar2: function () {
-        var data = {};
-        //por cada input del view
-        this.$el.find("[name]").each(function () {
-            data[this.name] = this.value;
-        });
-
-        //Aquí se realizan los principales calculos de busqueda
-        var myModel;
-        var coleccion = new PersonaCollection();
-        for(var i=0; i<this.collection.length; i++) {
-            myModel = this.collection.models[i];
-            if (data["sel1"]=="Nombre"){
-                if (myModel.attributes.nombre.toLowerCase().search(data["filtrado"].toLowerCase())!=-1){
-                    coleccion.add(myModel);
-                }
-            }else if(data["sel1"]=="Apellido"){
-                if (myModel.attributes.apellido.toLowerCase().search(data["filtrado"].toLowerCase())!=-1){
-                    coleccion.add(myModel);
-                }
-            }else if(data["sel1"]=="Alias") {
-                if (myModel.attributes.alias.toLowerCase().search(data["filtrado"].toLowerCase())!=-1){
-                    coleccion.add(myModel);
-                }
-            }else if(data["sel1"]=="ID") {
-                if (myModel.attributes.id.toString().search(data["filtrado"])!=-1){
-                    coleccion.add(myModel);
-                }
-            }else if(data["sel1"]=="Dirección") {
-                if (myModel.attributes.direccion.toLowerCase().search(data["filtrado"].toLowerCase())!=-1){
-                    coleccion.add(myModel);
-                }
-            }else if(data["sel1"]=="Email") {
-                if (myModel.attributes.email.toLowerCase().search(data["filtrado"].toLowerCase())!=-1){
-                    coleccion.add(myModel);
-                }
-            }
-        }
-
         //Para renderizar los resultados de la busqueda
-        var tmpl = _.template(this.template);
-        this.$el.html(tmpl({
-            collection: coleccion.toJSON(),
-            pagina: this.pagina,
-            pagMax: this.pagMax
-        }));
-        return this;
+        var thiz=this;
+        this.filtro=$(this.el).find('#filtrado').val();
+        thiz.collection.fetch({ data: $.param({inicio: (this.pagina-1)*10, cantidad: 10, filtro: this.filtro}),
+            success : function(collection, response) {
+                thiz.pagMax=Math.ceil(response.total/10);
+                thiz.render();
+                $("#editar").attr("disabled", true);
+                $("#eliminar").attr("disabled", true);
+            }
+        });
     },
 
     eliminar: function () {
@@ -135,6 +103,10 @@ var ListaPersonaView = Backbone.View.extend({
                     alert("Se eliminó correctamente!");
                     thiz.collection.fetch();
                     thiz.selectedPersona = undefined;
+                    $("#eliminar").attr("disabled", true);
+                    $("#editar").attr("disabled", true);
+
+
                 },
                 error: function (model, response, options) {
                     alert("Ha ocurrido un error!");
@@ -149,7 +121,6 @@ var ListaPersonaView = Backbone.View.extend({
     editar: function () {
         if(this.selectedPersona==undefined){
             alert("Seleccione un elemento primero!");
-            $('#myModal2').modal('toggle');
         }else {
             //se inicializa el formulario de alta de personas
             var editarview = new FormularioPersonaView({
@@ -157,9 +128,7 @@ var ListaPersonaView = Backbone.View.extend({
                 el: $("#formulario-editar-persona")
             });
         }
-        this.selectedPersona = undefined;
     },
-
     siguiente: function() {
         var thiz=this;
         if (this.pagina<this.pagMax){
@@ -168,7 +137,7 @@ var ListaPersonaView = Backbone.View.extend({
           thiz.collection.fetch({ data: $.param({inicio: (this.pagina-1)*10, cantidad: 10, filtro: this.filtro}),
               success : function(collection, response) {
                   thiz.pagMax=Math.ceil(response.total/10);
-                  thiz.render();
+                  thiz.view.render();
               }
           });
       }
@@ -188,3 +157,7 @@ var ListaPersonaView = Backbone.View.extend({
 
 
 });
+_.formatdate = function (stamp) {
+    var d = new Date(stamp); // or d = new Date(date)
+    return d.getDate()+'-'+(d.getMonth() + 1)+'-'+d.getFullYear()+' '+d.getHours()+':'+d.getMinutes();
+};

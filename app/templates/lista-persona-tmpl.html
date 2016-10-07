@@ -1,13 +1,6 @@
 <label style="font-size: 25px">Buscar:</label>
 <div id="caja1">
-    <select class="form-control" name="sel1" style="width: 150px;">
-        <option>Nombre</option>
-        <option>ID</option>
-        <option>Apellido</option>
-        <option>Alias</option>
-        <option>Email</option>
-        <option>Dirección</option>
-    </select><br>
+    <br>
     <input type="text" placeholder="Buscar" name="filtrado" id="filtrado"  class="form-control">
     <br>
     <a class="btn btn-default" id="filtrar" role="button">
@@ -63,10 +56,11 @@
                             <%=item.direccion %>
                         </td>
                         <td>
-                            <%=item.fechacreacion %>
+                            <%= _.formatdate(item.fechacreacion) %>
+
                         </td>
                         <td>
-                            <%=item.fechamodificacion %>
+                            <%= _.formatdate(item.fechamodificacion) %>
                         </td>
 
                     </tr>

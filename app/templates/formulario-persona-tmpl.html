@@ -3,6 +3,12 @@
     <div class="panel-body">
         <section class="form" id="formDatos">
             <h2><%= $.isEmptyObject(contacto) ? 'Agregar' : 'Editar'%> contacto</h2>
+            <% if (!$.isEmptyObject(contacto)) { %>
+                <div class="form-group">
+                    <label for="nombre">Id:</label>
+                    <input value="<%= contacto.id%>" name="id" id="id" class="form-control" type="text" readonly>
+                </div>
+            <% } %>
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
                 <input value="<%= !$.isEmptyObject(contacto) ? contacto.nombre : '' %>" name="nombre" id="nombre" class="form-control" type="text" maxlength="25" placeholder="Longitud máxima de 25 caracteres" required >
@@ -30,6 +36,12 @@
                 <label for="nombre">Dirección:</label>
                 <input value="<%= !$.isEmptyObject(contacto) ? contacto.direccion : '' %>" name="direccion" id="direccion" class="form-control" type="text" maxlength="100" placeholder="Longitud máxima de 100 caracteres [Opcional]">
             </div>
+            <% if (!$.isEmptyObject(contacto)) { %>
+            <div class="form-group">
+                <label for="nombre">Fecha de creación: </label>
+                <%= _.formatdate(contacto.fechacreacion)%>
+            </div>
+            <% } %>
         </section>
     </div>
     <div class="panel-footer">

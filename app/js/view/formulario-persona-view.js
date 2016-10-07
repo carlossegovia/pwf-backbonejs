@@ -45,7 +45,6 @@ var FormularioPersonaView = Backbone.View.extend({
                 success: function(response){
 
                     contacto = response.toJSON();
-                    console.log(contacto);
                     var tmpl = _.template(thiz.template);
                     //se añade el html resultante al contenedor del view.
                     thiz.$el.html(tmpl({
@@ -100,19 +99,22 @@ var FormularioPersonaView = Backbone.View.extend({
             alert("El campo de email no es valido, se debe seguir el siguiente formato de ejemplo: example@gmail.com");
             return false;
         }
-
+        var modificar=false;
         var today = new Date();
         if (this.id!=undefined){
             data["fechamodificacion"] = today.toISOString().substring(0, 10);
             data["id"] = this.id;
+
         }else{
             data["fechacreacion"] = today.toISOString().substring(0, 10);
+            modificar=true;
         }
         var model = new PersonaModel(data);
 
         model.save(null, {
             success: function(model, response) {
                 alert("Se agregó correctamente!");
+
             },
             error: function(model, response) {
                 alert("Ha ocurrido un error!");
