@@ -7,7 +7,7 @@ var FormularioPersonaView = Backbone.View.extend({
      * Url del template que corresponde al view
      * @field
      */
-    templateURL: "templates/formulario-persona-tmpl.html",
+    templateURL: "app/templates/formulario-persona-tmpl.html",
 
     /**
      * Atributo que define el mapeo de eventos a handlers
