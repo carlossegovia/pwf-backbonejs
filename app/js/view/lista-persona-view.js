@@ -20,7 +20,16 @@ var ListaPersonaView = Backbone.View.extend({
     },
     limpiar: function(){
         this.filtro='';
-        this.render();
+        var thiz=this;
+        this.filtro=$(this.el).find('#filtrado').val();
+        thiz.collection.fetch({ data: $.param({inicio: (this.pagina-1)*10, cantidad: 10, filtro: this.filtro}),
+            success : function(collection, response) {
+                thiz.pagMax=Math.ceil(response.total/10);
+                thiz.render();
+                $("#editar").attr("disabled", true);
+                $("#eliminar").attr("disabled", true);
+            }
+        });
     },
     clicked: function(e){
         e.preventDefault();
