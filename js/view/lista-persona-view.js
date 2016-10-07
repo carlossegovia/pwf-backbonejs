@@ -137,7 +137,7 @@ var ListaPersonaView = Backbone.View.extend({
           thiz.collection.fetch({ data: $.param({inicio: (this.pagina-1)*10, cantidad: 10, filtro: this.filtro}),
               success : function(collection, response) {
                   thiz.pagMax=Math.ceil(response.total/10);
-                  thiz.view.render();
+                  thiz.render();
               }
           });
       }
