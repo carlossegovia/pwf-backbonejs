@@ -1,5 +1,7 @@
 # Programación Web Front-End || Backbone
 Proyecto front base con backbonejs correspondiente al la materia Programación Web Frontend de la Facultad Politécnica de la Universidad nacional de Asunción. Abarca las clases de [SPA](https://docs.google.com/presentation/d/1HzVvagkthpFyy1S0a2YTGkABXIro947iEJECD1maMCg/edit?usp=sharing) y la [Introducción a BackboneJS](https://docs.google.com/presentation/d/1YDK8cRgy8FgxKBJpePyPuTBTaKVz3tpbqowkPbNSXH4/edit?usp=sharing).
+## Github Pages
+El proyecto se encuentra disponible para una mejor visualización [aquí](https://carlossegovia.github.io/pwf-backbonejs/app/)
 
 ## Estructura directorios
 
