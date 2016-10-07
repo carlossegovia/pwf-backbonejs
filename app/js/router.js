@@ -46,12 +46,22 @@ var AppRouter = Backbone.Router.extend({
     /**
      * Se encarga de manejar el listado y alta de personas.
      */
-    home: function () {
+    home: function (id) {
         this.collection.fetch();
         var view = new ListaPersonaView({
             collection: this.collection,
             selectedPersona: this.selectedPersona,
             el: $("#lista-persona")
+        });
+
+        var form = new FormularioPersonaView({
+            collection: this.collection,
+            el: $("#formulario-persona")
+        });
+
+        var editarview = new FormularioPersonaView({
+            collection: this.collection, id: id,
+            el: $("#formulario-editar-persona")
         });
     },
     agregar: function() {
@@ -61,6 +71,7 @@ var AppRouter = Backbone.Router.extend({
             el: $("#formulario-persona")
         });
     },
+
     editar: function(id) {
         //se inicializa el formulario de alta de personas
         var editarview = new FormularioPersonaView({
