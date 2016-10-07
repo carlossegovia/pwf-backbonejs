@@ -7,7 +7,7 @@ var ListaPersonaView = Backbone.View.extend({
      * Url del template que corresponde al view
      * @field
      */
-    templateURL: "app/templates/lista-persona-tmpl.html",
+    templateURL: "templates/lista-persona-tmpl.html",
 
     events: {
         "click #limpiar": "render",

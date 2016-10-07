@@ -60,7 +60,10 @@
 
                         </td>
                         <td>
-                            <%= _.formatdate(item.fechamodificacion) %>
+                            <% if (!$.isEmptyObject(item.fechamodificacion)) { %>
+                            _.formatdate(item.fechamodificacion)
+                            <% } %>
+
                         </td>
 
                     </tr>
