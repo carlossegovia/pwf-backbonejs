@@ -66,6 +66,10 @@ var ListaPersonaView = Backbone.View.extend({
                 });
         });
         this.listenTo(this.collection, 'destroy', this.render);
+        notificacion.on("alert", function(id) {
+            thiz.filtrar2();
+
+        });
 
 
     },
@@ -109,13 +113,17 @@ var ListaPersonaView = Backbone.View.extend({
         if(this.selectedPersona==undefined){
             alert("Seleccione un elemento primero!");
         }else {
+            var r = confirm("Está seguro?");
+            if (r==false){
+                return false;
+            }
             var a_eliminar = this.selectedPersona;
             var thiz = this;
             a_eliminar.destroy({
                 dataType: 'text',
                 success: function (model, response, options) {
                     alert("Se eliminó correctamente!");
-                    thiz.collection.fetch();
+                    thiz.collection.fetch({ data: $.param({inicio: (this.pagina-1)*10, cantidad: 10, filtro: this.filtro})});
                     thiz.selectedPersona = undefined;
                     $("#eliminar").attr("disabled", true);
                     $("#editar").attr("disabled", true);

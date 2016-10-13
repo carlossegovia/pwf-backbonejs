@@ -14,7 +14,7 @@ var FormularioPersonaView = Backbone.View.extend({
      * @field
      */
     events: {
-        "click #guardar": "guardar"
+        "click #guardar": "guardarContacto"
     },
 
     /**
@@ -73,7 +73,7 @@ var FormularioPersonaView = Backbone.View.extend({
      * Se encarga de añade el nuevo dato al collection que se encuentra en memoria.
      * @function
      */
-    guardar: function () {
+    guardarContacto: function () {
         var data = {};
         var thiz=this;
         //por cada input del view
@@ -99,6 +99,10 @@ var FormularioPersonaView = Backbone.View.extend({
             alert("El campo de email no es valido, se debe seguir el siguiente formato de ejemplo: example@gmail.com");
             return false;
         }
+        var r = confirm("Está seguro?");
+        if (r==false){
+            return false;
+        }
         var modificar=false;
         var today = new Date();
         if (this.id!=undefined){
@@ -114,6 +118,10 @@ var FormularioPersonaView = Backbone.View.extend({
         model.save(null, {
             success: function(model, response) {
                 alert("Se agregó correctamente!");
+                thiz.undelegateEvents();
+                thiz.stopListening();
+                notificacion.trigger("alert");
+
             },
             error: function(model, response) {
                 alert("Ha ocurrido un error!");

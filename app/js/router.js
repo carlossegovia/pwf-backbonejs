@@ -79,7 +79,8 @@ var AppRouter = Backbone.Router.extend({
         alert("Opción " + action + " no válida.");
     }
 });
-
+var notificacion = {};
+_.extend(notificacion, Backbone.Events);
 /**
  * Constructor / Entrypoint
  * @constructor
