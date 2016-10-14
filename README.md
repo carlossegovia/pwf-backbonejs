@@ -17,3 +17,8 @@ El proyecto se encuentra disponible para una mejor visualización [aquí](https:
 > * [Bootstrap](http://getbootstrap.com/): is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.
 > * [JQuery](https://jquery.com/): is a fast, small, and feature-rich JavaScript library.
 > * [Underscore](http://underscorejs.org/): is a JavaScript library that provides a whole mess of useful functional programming helpers without extending any built-in objects.
+
+## Desarrolladores del Proyecto
+
+> * [Carlos Segovia](https://github.com/carlossegovia)
+> * [Ruben Figueredo](https://github.com/rubenfig)
