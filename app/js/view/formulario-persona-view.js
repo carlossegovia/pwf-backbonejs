@@ -120,6 +120,7 @@ var FormularioPersonaView = Backbone.View.extend({
                 alert("Se agregó correctamente!");
                 thiz.undelegateEvents();
                 thiz.stopListening();
+                thiz.render();
                 notificacion.trigger("alert");
 
             },
